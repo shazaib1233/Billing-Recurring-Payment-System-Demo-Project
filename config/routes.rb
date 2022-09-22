@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  get 'home/index'
-  # devise_for :users
-  root 'home#index'
   devise_for :users, controllers: { invitations: 'users/invitations' }
-
 
   namespace :buyer do
     resources :users
   end
 
-      # devise_for :users, controllers: {
-      #   sessions: 'users/sessions'
-      # }
+  namespace :admin do
+    resources :users
+  end
+
+  root 'home#index'
 end

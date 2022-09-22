@@ -1,0 +1,7 @@
+
+  # devise_for :users
+  # scope "/buyer", as: "buyer", module: "buyer" do
+
+  # devise_for :users, controllers: {
+  #   sessions: 'users/sessions'
+  # }

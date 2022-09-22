@@ -1,13 +1,11 @@
 class Users::InvitationsController < Devise::InvitationsController
-    before_action :check_admin
+  before_action :validate_inviter
 
-private
-def check_admin
-    if user_signed_in?
-      if current_user.buyer?
-        redirect_to buyer_users_path, alert: 'Buyer is not allowed to access this part of the site, Redirecting to home page'
-      end
+  private
+
+  def validate_inviter
+  	if user_signed_in? && current_user.buyer?
+      redirect_to root_path, alert: 'Invalid Access'
     end
   end
-
 end
