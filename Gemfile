@@ -5,9 +5,10 @@ ruby '3.1.2'
 
 # Devise Authentication
 gem 'devise'
-# User email
-# gem 'letter_opener'
-
+# User email preview
+gem "letter_opener", group: :development
+# Invite buyers 
+gem 'devise_invitable', '~> 2.0.0'
 gem 'net-smtp'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.6', '>= 6.1.6.1'

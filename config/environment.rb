@@ -3,5 +3,20 @@ require_relative "application"
 
 # Initialize the Rails application.
 Rails.application.initialize!
-# config.action_mailer.delivery_method = :smtp
-# config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+
+
+ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.perform_deliveries = true
+ ActionMailer::Base.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 465,
+    domain: "gmail.com",
+    user_name: 'shazaibmaqsood9',
+    password: 'hellnohellno3',
+    authentication: "plain",
+    :ssl => true,
+    :tsl => true,
+    enable_starttls_auto: true
+  }
+
