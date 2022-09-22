@@ -1,11 +1,11 @@
 class Users::InvitationsController < Devise::InvitationsController
-  before_action :validate_inviter
+  before_action :validate_admin, only: [:new, :create]
 
   private
-
-  def validate_inviter
-  	if user_signed_in? && current_user.buyer?
-      redirect_to root_path, alert: 'Invalid Access'
-    end
+  
+  def validate_admin
+    return if current_user&.admin?
+    
+    redirect_to root_path, alert: 'Invalid Access'
   end
 end
