@@ -1,0 +1,19 @@
+<div class='nested-fields'>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :code %>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_price %>
+    <%= f.text_field :unit_price %>
+  </div>
+  <div class="field">
+    <%= f.label :max_unit_limit %>
+    <%= f.text_field :max_unit_limit %>
+  </div>
+  <%= link_to_remove_association "Remove feature", f %>
+</div>

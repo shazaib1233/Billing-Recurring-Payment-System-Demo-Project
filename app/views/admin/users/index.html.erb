@@ -1,6 +1,3 @@
 <h1>ADMIN's Index</h1>
-<p>Listing all users below : </p>
 
-<% User.all.each do |user|%>
-  <%= user.attributes %></br></br>
-<% end %>
+<%= render 'admin/collapse' %>

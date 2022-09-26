@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :subscriptions
+  has_many :plans, through: :subscriptions
+
   enum user_type: { admin: 'admin', buyer: 'buyer' }
 
   before_create :set_user_type

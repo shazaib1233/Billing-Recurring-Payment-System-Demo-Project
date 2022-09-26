@@ -5,6 +5,7 @@ class CreateFeatures < ActiveRecord::Migration[6.1]
       t.string :code
       t.decimal :unit_price
       t.integer :max_unit_limit
+      t.references :plan, null: false, foreign_key: true
 
       t.timestamps
     end

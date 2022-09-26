@@ -3,11 +3,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
 
+
+gem "cocoon"
 # Devise Authentication
 gem 'devise'
 # User email preview
 gem "letter_opener", group: :development
-# Invite buyers 
+# Invite buyers
 gem 'devise_invitable', '~> 2.0.0'
 gem 'net-smtp'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
