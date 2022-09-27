@@ -1,1 +1,31 @@
-This is buyer's index path
+<% if @subscriptions.present? %>
+  <h1> Currently Subscriped Plans: </h1>
+  <ul class='list-group'>
+    <% @subscriptions.each do |subscription|%>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h1> Available Plans to Choose From : </h1>
+<div class="row">
+<% @plans.each do |plan| %>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"><%= plan.name%> for $<%= plan.monthly_fee%></h5>
+        <p class="card-text">
+          <ul>
+          <% plan.features.each do |feature| %>
+            <li><%= feature.name %></li>
+          <% end %>
+          </ul>
+        </p>
+        <td><%= link_to 'Explore', admin_plan_path(plan), class: 'btn btn-primary' %></td>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

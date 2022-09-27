@@ -1,4 +1,4 @@
-class SubscriptionsController < ApplicationController
+class Buyer::SubscriptionsController < ApplicationController
   before_action :set_subscription, only: %i[ show edit update destroy ]
 
   def index
@@ -7,9 +7,7 @@ class SubscriptionsController < ApplicationController
 
   def show; end
 
-  def new
-    @subscription = Subscription.new
-  end
+  def new; end
 
   def edit; end
 
@@ -17,9 +15,9 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
-      redirect_to subscription_url(@subscription), notice: 'Subscription was successfully created.'
+      redirect_to buyer_users_path, notice: 'Subscription was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      redirect_to buyer_users_path, alert: 'Subscription Failed: ' + @subscription.errors.full_messages[0].to_s
     end
   end
 
@@ -33,15 +31,16 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     @subscription.destroy
-    redirect_to subscriptions_url, notice: 'Subscription was successfully destroyed.'
+    redirect_to buyer_users_path, notice: 'Plan was successfully unsubscribed.'
   end
 
   private
-    def set_subscription
-      @subscription = Subscription.find(params[:id])
-    end
 
-    def subscription_params
-      params.require(:subscription).permit(:name, :user_id, :plan_id)
-    end
+  def set_subscription
+    @subscription = Subscription.find(params[:id])
+  end
+
+  def subscription_params
+    params.require(:subscription).permit(:name, :user_id, :plan_id)
+  end
 end

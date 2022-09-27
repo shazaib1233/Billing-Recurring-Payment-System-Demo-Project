@@ -1,6 +1,6 @@
 <h1>Plans</h1>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
       <th>ID</th>
@@ -15,9 +15,9 @@
         <td><%= plan.id %></td>
         <td><%= plan.name %></td>
         <td><%= plan.monthly_fee %></td>
-        <td><%= link_to 'Show', plan %></td>
-        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', admin_plan_path(plan) %></td>
+        <td><%= link_to 'Edit', edit_admin_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', admin_plan_path(plan), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +25,4 @@
 
 <br>
 
-<%= link_to 'Add New Plan', new_plan_path, class: 'btn btn-primary' %>
+<%= link_to 'Add New Plan', new_admin_plan_path, class: 'btn btn-primary' %>

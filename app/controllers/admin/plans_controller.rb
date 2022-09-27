@@ -1,4 +1,4 @@
-class PlansController < ApplicationController
+class Admin::PlansController < ApplicationController
   before_action :set_plan, only: %i[ show edit update destroy ]
   before_action :validate_admin, except: %i[ index show ]
 
@@ -18,7 +18,6 @@ class PlansController < ApplicationController
     @plan = Plan.new(plan_params)
     @plan.user_id = current_user.id
 
-
     if @plan.save
       redirect_to root_path, notice: 'Plan was successfully created.'
     else
@@ -28,7 +27,7 @@ class PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
-      redirect_to plan_url(@plan), notice: 'Plan was successfully updated.'
+      redirect_to admin_plan_url(@plan), notice: 'Plan was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -40,17 +39,18 @@ class PlansController < ApplicationController
   end
 
   private
-    def set_plan
-      @plan = Plan.find(params[:id])
-    end
 
-    def plan_params
-      params.require(:plan).permit(:name, :monthly_fee, features_attributes: [:id, :name, :code, :unit_price, :max_unit_limit, :_destroy])
-    end
+  def set_plan
+    @plan = Plan.find(params[:id])
+  end
 
-    def validate_admin
-      return if current_user&.admin?
+  def plan_params
+    params.require(:plan).permit(:name, :monthly_fee, features_attributes: [:id, :name, :code, :unit_price, :max_unit_limit, :_destroy])
+  end
 
-      redirect_to root_path, alert: 'Invalid Access'
-    end
+  def validate_admin
+    return if current_user&.admin?
+
+    redirect_to root_path, alert: 'Invalid Access'
+  end
 end
