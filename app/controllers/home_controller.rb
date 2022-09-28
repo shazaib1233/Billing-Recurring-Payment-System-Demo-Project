@@ -4,7 +4,10 @@ class HomeController < ApplicationController
   private
 
   def check_user_type
-    return redirect_to admin_users_path if current_user&.admin?
-    return redirect_to buyer_users_path if current_user&.buyer?
+    if current_user.present?
+      return redirect_to admin_users_path if current_user&.admin?
+
+      redirect_to buyer_plans_path
+    end
   end
 end

@@ -1,6 +1,5 @@
-class Admin::PlansController < ApplicationController
+class Admin::PlansController < Admin::BaseController
   before_action :set_plan, only: %i[ show edit update destroy ]
-  before_action :validate_admin, except: %i[ index show ]
 
   def index
     @plans = Plan.all
@@ -48,9 +47,4 @@ class Admin::PlansController < ApplicationController
     params.require(:plan).permit(:name, :monthly_fee, features_attributes: [:id, :name, :code, :unit_price, :max_unit_limit, :_destroy])
   end
 
-  def validate_admin
-    return if current_user&.admin?
-
-    redirect_to root_path, alert: 'Invalid Access'
-  end
 end

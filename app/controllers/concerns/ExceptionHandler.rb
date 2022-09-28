@@ -8,11 +8,11 @@ module ExceptionHandler
 
   private
 
-  def handle_validation_error
-    render plain: 'Custom InvalidRecord Error'
+  def handle_validation_error(e)
+    redirect_back fallback_location: root_path, alert: e.message
   end
 
-  def handle_record_not_found
-    render plain: 'Custom RecordNotFound Error'
+  def handle_record_not_found(e)
+    redirect_back fallback_location: root_path, alert: e.message
   end
 end

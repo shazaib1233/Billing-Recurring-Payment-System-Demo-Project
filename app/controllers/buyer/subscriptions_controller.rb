@@ -1,8 +1,13 @@
-class Buyer::SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: %i[ show edit update destroy ]
+class Buyer::SubscriptionsController < Buyer::BaseController
+  before_action :set_subscription, only: %i[ show edit update destroy increment_consumed ]
 
   def index
     @subscriptions = Subscription.all
+  end
+
+  def increment_consumed
+    @subscription.update_attribute(:consumed_units, @subscription.consumed_units+1)
+    redirect_to root_path, notice: "Unit Consumed"
   end
 
   def show; end
@@ -15,9 +20,9 @@ class Buyer::SubscriptionsController < ApplicationController
     @subscription = Subscription.new(subscription_params)
 
     if @subscription.save
-      redirect_to buyer_users_path, notice: 'Subscription was successfully created.'
+      redirect_to buyer_plans_path, notice: 'Subscription was successfully created.'
     else
-      redirect_to buyer_users_path, alert: 'Subscription Failed: ' + @subscription.errors.full_messages[0].to_s
+      redirect_to buyer_plans_path, alert: 'Subscription Failed: ' + @subscription.errors.full_messages.to_sentence
     end
   end
 
@@ -31,7 +36,7 @@ class Buyer::SubscriptionsController < ApplicationController
 
   def destroy
     @subscription.destroy
-    redirect_to buyer_users_path, notice: 'Plan was successfully unsubscribed.'
+    redirect_to buyer_plans_path, notice: 'Plan was successfully unsubscribed.'
   end
 
   private

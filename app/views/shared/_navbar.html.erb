@@ -8,6 +8,9 @@
       <ul class='navbar-nav ms-auto' >
         <% if user_signed_in? %>
           <li class='navbar-text'>
+            <%= render 'buyer/plans/display_image'%>
+          </li>
+          <li class='navbar-text'>
             <%= current_user.user_type.upcase %>
           </li>
           <li class='navbar-text'>

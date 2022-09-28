@@ -1,0 +1,35 @@
+<% if @subscriptions.present? %>
+  <h1> Currently Subscriped Plans: </h1>
+  <ul class='list-group'>
+    <% @subscriptions.each do |subscription|%>
+      <li class='list-group-item'>
+        <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %>
+        <%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right'%>
+        <%= link_to 'Consume Unit', increment_consumed_buyer_subscription_path(subscription), method: :patch, class:"btn btn-primary float-right mx-3" %>
+        <div class="d-flex p-2 bd-highlight">
+          <p class="text-primary">Total Units: </p><%= subscription.consumed_units %>
+          <p class="text-primary ms-3">Consumed Units: </p><%= subscription.consumed_units %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<h1> Available Plans to Choose From : </h1>
+<div class="row">
+  <% @plans.each do |plan| %>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= plan.name %> for $<%= plan.monthly_fee %></h5>
+          <ul class="card-text">
+            <% plan.features.each do |feature| %>
+              <li><%= feature.name %></li>
+            <% end %>
+          </ul>
+          <div><%= link_to 'Explore', buyer_plan_path(plan), class: 'btn btn-primary' %></div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
