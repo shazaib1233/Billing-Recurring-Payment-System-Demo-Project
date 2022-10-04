@@ -1,0 +1,25 @@
+<%= form_for [:admin, @plan] do |f| %>
+  <%= render 'shared/errors', object: @plan %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <br/>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :monthly_fee %>
+    <br/>
+    <%= f.text_field :monthly_fee %>
+  </div>
+
+  <h3>Features</h3>
+  <div id='features'>
+    <%= f.fields_for :features do |feature| %>
+      <%= render 'feature_fields', f: feature %>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association 'add feature', f, :features %>
+    </div>
+  </div>
+  <%= f.submit 'Save' %>
+<% end %>
