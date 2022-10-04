@@ -4,8 +4,7 @@
   </li>
   <li class='list-group-item'><strong class='text-primary'>Code: </strong> <%= feature.code %></li>
   <li class='list-group-item'><strong class='text-primary'>Unit Price:</strong> <%= feature.unit_price %></li>
-  <li class='list-group-item'>
-    <strong class='text-primary'>Max Unit Limit:</strong> <%= feature.max_unit_limit %>
+  <li class='list-group-item'><strong class='text-primary'>Allocated units:</strong> <%= FeaturePlan.where(plan_id: plan_id).where(feature_id: feature.id).first.allocated_units %>
   </li>
 </ul>
 </br>

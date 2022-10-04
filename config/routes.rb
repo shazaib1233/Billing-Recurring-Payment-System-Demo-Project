@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :plans
+    resources :features
+    resources :usage
+    resources :payments
   end
 
   root 'home#index'

@@ -1,0 +1,21 @@
+<h1> Currently Subscriped Plans: </h1>
+<ul class='list-group'>
+  <% @subscriptions.each do |plan| %>
+    <% plan = Plan.find(plan) %>
+    <li class='list-group-item'>
+      <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %>
+      <% plan.features.each do |feature| %>
+        <li class='list-group-item'>
+          <%= feature.name %>
+          <div class="d-flex p-2 bd-highlight">
+            <p class="text-primary">Allocated Units: </p><%= FeaturePlan.where(plan_id: plan).where(feature_id: feature.id).first.allocated_units %>
+            <% subscription = Subscription.where(user_id: @user.id).where(plan_id: plan).where(feature_id: feature.id).first %>
+            <p class="text-primary ms-3">Consumed Units: </p><%= subscription.consumed_units %>
+          </div>
+        </li>
+      <% end  %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Generate Bill', root_path, class: 'btn btn-primary mt-2'%>

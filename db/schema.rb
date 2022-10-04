@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_28_082523) do
+ActiveRecord::Schema.define(version: 2022_10_04_075128) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -40,15 +40,31 @@ ActiveRecord::Schema.define(version: 2022_09_28_082523) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "feature_plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.bigint "feature_id", null: false
+    t.integer "allocated_units"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["feature_id"], name: "index_feature_plans_on_feature_id"
+    t.index ["plan_id"], name: "index_feature_plans_on_plan_id"
+  end
+
   create_table "features", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.decimal "unit_price", precision: 10
     t.integer "max_unit_limit"
-    t.bigint "plan_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["plan_id"], name: "index_features_on_plan_id"
+  end
+
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.decimal "total", precision: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "plans", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -61,11 +77,13 @@ ActiveRecord::Schema.define(version: 2022_09_28_082523) do
 
   create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.integer "consumed_units", default: 0
     t.bigint "user_id", null: false
     t.bigint "plan_id", null: false
+    t.bigint "feature_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "consumed_units", default: 0
+    t.index ["feature_id"], name: "index_subscriptions_on_feature_id"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
@@ -94,7 +112,10 @@ ActiveRecord::Schema.define(version: 2022_09_28_082523) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "features", "plans"
+  add_foreign_key "feature_plans", "features"
+  add_foreign_key "feature_plans", "plans"
+  add_foreign_key "payments", "users"
+  add_foreign_key "subscriptions", "features"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "subscriptions", "users"
 end

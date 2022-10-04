@@ -11,6 +11,8 @@ import 'bootstrap';
 
 require('jquery');
 require('@nathanvda/cocoon');
+require('packs/select2setup')
+require('packs/chosensetup')
 
 Rails.start();
 Turbolinks.start();

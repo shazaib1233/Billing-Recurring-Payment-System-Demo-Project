@@ -1,3 +1,4 @@
 class Feature < ApplicationRecord
-  belongs_to :plan
+  has_many :feature_plans, dependent: :destroy
+  has_many :plans, through: :feature_plans
 end
