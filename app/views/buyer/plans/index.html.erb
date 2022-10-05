@@ -1,19 +1,27 @@
+<% if @bill %>
+  <h1> Latest Available Bill for <%= current_user.email %></h1>
+  <%= "Total: #{@bill.total}" %><br />
+  <%= "Generated at: #{@bill.created_at}" %>
+<% end %>
+
 <% if @subscriptions.present? %>
   <h1> Currently Subscriped Plans: </h1>
   <ul class='list-group'>
-    <% user_plans = @subscriptions.pluck(:plan_id).uniq %>
+    <% user_plans = get_plans(@subscriptions) %>
     <% user_plans.each do |plan| %>
-      <% plan = Plan.find(plan) %>
+      <% plan = find_plan(plan) %>
       <li class='list-group-item'>
-        <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %>
+        <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %><br />
         <%= link_to 'Unsubscribe', buyer_subscription_path(plan), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right'%>
+        <strong>Monthly Fee: </strong><%= plan.monthly_fee %>
         <% plan.features.each do |feature| %>
           <li class='list-group-item'>
-            <%= feature.name %>
-            <% subscription = @subscriptions.where(plan_id: plan).where(feature_id: feature.id).first %>
+            <%= "Feature Name: #{feature.name}" %><br />
+            <%= "Unit Price: #{feature.unit_price}" %>
+            <% subscription = get_subscription(current_user.id, plan, feature.id) %>
             <%= link_to 'Consume Unit', increment_consumed_buyer_subscription_path(subscription), method: :patch, class:"btn btn-primary float-right mx-3" %>
             <div class="d-flex p-2 bd-highlight">
-              <p class="text-primary">Allocated Units: </p><%= FeaturePlan.where(plan_id: plan).where(feature_id: feature.id).first.allocated_units %>
+              <p class="text-primary">Allocated Units: </p><%= get_allocated_units(plan, feature.id) %>
               <p class="text-primary ms-3">Consumed Units: </p><%= subscription.consumed_units %>
             </div>
           </li>

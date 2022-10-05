@@ -4,6 +4,7 @@ class Buyer::PlansController < Buyer::BaseController
   def index
     @plans = Plan.all
     @subscriptions = Subscription.where(user_id: current_user.id)
+    @bill = Payment.where(user_id: current_user.id).last
   end
 
   def show;end

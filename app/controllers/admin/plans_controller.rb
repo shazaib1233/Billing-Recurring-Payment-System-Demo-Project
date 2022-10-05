@@ -14,8 +14,7 @@ class Admin::PlansController < Admin::BaseController
   def edit; end
 
   def create
-    @plan = Plan.new(plan_params)
-    @plan.user_id = current_user.id
+    @plan = Plan.new(plan_params.merge(user_id: current_user.id))
 
     if @plan.save
       redirect_to root_path, notice: 'Plan was successfully created.'
@@ -25,7 +24,7 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def update
-    if @plan.update(plan_params)
+    if @plan.update(plan_params.merge(user_id: current_user.id))
       redirect_to admin_plan_url(@plan), notice: 'Plan was successfully updated.'
     else
       render :edit, status: :unprocessable_entity

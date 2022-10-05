@@ -1,15 +1,23 @@
+<% if @bill %>
+  <h1> Latest Available Bill for <%= @user.email %></h1>
+  <%= "Total: #{@bill.total}" %><br />
+  <%= "Generated at: #{@bill.created_at}" %>
+<% end %>
+
 <h1> Currently Subscriped Plans: </h1>
 <ul class='list-group'>
   <% @subscriptions.each do |plan| %>
-    <% plan = Plan.find(plan) %>
+    <% plan = find_plan(plan) %>
     <li class='list-group-item'>
-      <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %>
+      <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %><br />
+      <strong>Monthly Fee: </strong><%= plan.monthly_fee %>
       <% plan.features.each do |feature| %>
         <li class='list-group-item'>
-          <%= feature.name %>
+          <%= "Feature Name: #{feature.name}" %><br />
+          <%= "Unit Price: #{feature.unit_price}" %>
           <div class="d-flex p-2 bd-highlight">
-            <p class="text-primary">Allocated Units: </p><%= FeaturePlan.where(plan_id: plan).where(feature_id: feature.id).first.allocated_units %>
-            <% subscription = Subscription.where(user_id: @user.id).where(plan_id: plan).where(feature_id: feature.id).first %>
+            <p class="text-primary">Allocated Units: </p><%= get_allocated_units(plan, feature.id) %>
+            <% subscription = get_subscription(@user.id, plan, feature.id)%>
             <p class="text-primary ms-3">Consumed Units: </p><%= subscription.consumed_units %>
           </div>
         </li>
@@ -18,4 +26,5 @@
   <% end %>
 </ul>
 
-<%= link_to 'Generate Bill', root_path, class: 'btn btn-primary mt-2'%>
+<%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-primary mt-2'%>
+<%= link_to 'Back', admin_usage_index_path, class: 'btn btn-primary mt-2'%>
