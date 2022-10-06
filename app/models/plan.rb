@@ -8,6 +8,7 @@ class Plan < ApplicationRecord
   has_many :users, through: :subscriptions
 
   validates :name, :monthly_fee, presence: true
+  validates :monthly_fee, numericality: { greater_than: 0 }
 
   accepts_nested_attributes_for :feature_plans, reject_if: :all_blank, allow_destroy: true
 end

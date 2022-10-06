@@ -4,6 +4,8 @@ class FeaturePlan < ApplicationRecord
 
   validates :feature_id, uniqueness: { scope: :plan_id }
   validates :allocated_units, presence: true
+  validates :allocated_units, numericality: { greater_than: 0 }
+
   validate :allocated_units_limit
 
   def allocated_units_limit
