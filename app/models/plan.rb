@@ -7,5 +7,7 @@ class Plan < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :users, through: :subscriptions
 
+  validates :name, :monthly_fee, presence: true
+
   accepts_nested_attributes_for :feature_plans, reject_if: :all_blank, allow_destroy: true
 end

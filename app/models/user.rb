@@ -19,10 +19,9 @@ class User < ApplicationRecord
   private
 
   def set_user_type
-    if self.created_by_invite?
-      self.user_type = 'buyer'
-    else
-      self.user_type = 'admin'
-    end
+    return if self.user_type.present?
+    return self.user_type = 'buyer' if created_by_invite?
+
+    self.user_type = 'admin'
   end
 end

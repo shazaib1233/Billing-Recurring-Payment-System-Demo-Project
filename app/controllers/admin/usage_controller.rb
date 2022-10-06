@@ -6,7 +6,7 @@ class Admin::UsageController < Admin::BaseController
 
   def show
     @user = User.find(params[:id])
-    @subscriptions = @user.subscriptions.pluck(:plan_id).uniq
+    @subscriptions = @user.subscriptions
     @bill = Payment.where(user_id: @user.id).last
   end
 

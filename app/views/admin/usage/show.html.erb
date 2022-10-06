@@ -1,30 +1,35 @@
 <% if @bill %>
   <h1> Latest Available Bill for <%= @user.email %></h1>
-  <%= "Total: #{@bill.total}" %><br />
+  <%= "Total: $#{@bill.total}" %><br />
   <%= "Generated at: #{@bill.created_at}" %>
 <% end %>
 
 <h1> Currently Subscriped Plans: </h1>
-<ul class='list-group'>
-  <% @subscriptions.each do |plan| %>
-    <% plan = find_plan(plan) %>
-    <li class='list-group-item'>
-      <strong class='text-primary'>Subscription Name: </strong> <%= plan.name %><br />
+<div class='list-group'>
+  <% @subscriptions.each do |subscription| %>
+    <div class='list-group-item'>
+      <% plan = subscription.plan %>
+      <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %><br />
       <strong>Monthly Fee: </strong><%= plan.monthly_fee %>
       <% plan.features.each do |feature| %>
-        <li class='list-group-item'>
+        <div class='list-group-item mt-4'>
           <%= "Feature Name: #{feature.name}" %><br />
           <%= "Unit Price: #{feature.unit_price}" %>
+          <% subscription_feature = get_subscription_feature(subscription.id, feature.id) %>
           <div class="d-flex p-2 bd-highlight">
             <p class="text-primary">Allocated Units: </p><%= get_allocated_units(plan, feature.id) %>
-            <% subscription = get_subscription(@user.id, plan, feature.id)%>
-            <p class="text-primary ms-3">Consumed Units: </p><%= subscription.consumed_units %>
+            <% if subscription_feature %>
+              <p class="text-primary ms-3">Consumed Units: </p><%= subscription_feature.consumed_units %>
+            <% else %>
+              <p class="text-primary ms-3">Consumed Units: </p>0
+            <% end %>
           </div>
-        </li>
-      <% end  %>
-    </li>
+        </div>
+        <br />
+      <% end %>
+    </div>
   <% end %>
-</ul>
+</div>
 
-<%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-primary mt-2'%>
-<%= link_to 'Back', admin_usage_index_path, class: 'btn btn-primary mt-2'%>
+<%= link_to 'Generate Bill', admin_payments_path(payment: { user_id: @user.id }), method: :create, class: 'btn btn-primary mt-2' %>
+<%= link_to 'Back', admin_usage_index_path, class: 'btn btn-primary mt-2' %>

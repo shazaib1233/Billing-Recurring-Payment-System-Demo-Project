@@ -7,7 +7,7 @@ class Buyer::PlansController < Buyer::BaseController
     @bill = Payment.where(user_id: current_user.id).last
   end
 
-  def show;end
+  def show; end
 
   private
 

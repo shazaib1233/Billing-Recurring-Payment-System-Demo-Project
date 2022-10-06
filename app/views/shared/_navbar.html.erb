@@ -5,10 +5,10 @@
       <span class='navbar-toggler-icon'></span>
     </button>
     <div class='collapse navbar-collapse' id='navbarNav'>
-      <ul class='navbar-nav ms-auto' >
+      <ul class='navbar-nav ms-auto'>
         <% if user_signed_in? %>
           <li class='navbar-text'>
-            <%= render 'buyer/plans/display_image'%>
+            <%= render 'buyer/plans/display_image' %>
           </li>
           <li class='navbar-text'>
             <%= current_user.user_type.upcase %>
@@ -22,7 +22,7 @@
             </li>
           <% end %>
           <li class='nav-item'>
-            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete,class: 'btn btn-danger' %>
+            <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %>
           </li>
         <% else %>
           <li class='nav-item'>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_04_075128) do
+ActiveRecord::Schema.define(version: 2022_10_06_055725) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -75,15 +75,22 @@ ActiveRecord::Schema.define(version: 2022_10_04_075128) do
     t.integer "user_id", null: false
   end
 
-  create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
-    t.integer "consumed_units", default: 0
-    t.bigint "user_id", null: false
-    t.bigint "plan_id", null: false
+  create_table "subscription_features", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "feature_id", null: false
+    t.bigint "subscription_id", null: false
+    t.integer "consumed_units", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["feature_id"], name: "index_subscriptions_on_feature_id"
+    t.index ["feature_id"], name: "index_subscription_features_on_feature_id"
+    t.index ["subscription_id"], name: "index_subscription_features_on_subscription_id"
+  end
+
+  create_table "subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
@@ -115,7 +122,8 @@ ActiveRecord::Schema.define(version: 2022_10_04_075128) do
   add_foreign_key "feature_plans", "features"
   add_foreign_key "feature_plans", "plans"
   add_foreign_key "payments", "users"
-  add_foreign_key "subscriptions", "features"
+  add_foreign_key "subscription_features", "features"
+  add_foreign_key "subscription_features", "subscriptions"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "subscriptions", "users"
 end

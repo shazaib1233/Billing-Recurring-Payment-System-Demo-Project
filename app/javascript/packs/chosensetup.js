@@ -1,7 +1,7 @@
-import $ from 'jquery'
-import 'chosen-js/chosen.css'
-import 'chosen-js'
+import $ from 'jquery';
+import 'chosen-js/chosen.css';
+import 'chosen-js';
 
 window.addEventListener('turbolinks:load', () => {
-  $(".chosen").chosen();
-})
+  $('.chosen').chosen();
+});
