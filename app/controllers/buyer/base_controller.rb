@@ -4,9 +4,8 @@ class Buyer::BaseController < ApplicationController
   protected
 
   def validate_buyer
-    return if current_user&.buyer?
+    return if current_user.buyer?
 
     redirect_to root_path, alert: 'Invalid Access'
   end
-
 end

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #   password123#
 
-COUNT = 5
+COUNT = 50
 
 puts "Populating Database"
 

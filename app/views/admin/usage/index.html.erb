@@ -9,7 +9,7 @@
           </h5>
           <div class='card-body'>
             <h5 class='card-title'>
-              <div class='text-primary mb-2'>Subscribed Plans:</div><%= user.subscriptions.count %>
+              <div class='text-primary mb-2'>Subscribed Plans:</div><%= user.subscriptions.size %>
             </h5>
             <div class='btn-group mr-2 mt-4' role='group' aria-label='links'>
               <%= link_to 'View Subscribed Plans', admin_usage_path(user), class: 'btn btn-primary' %>

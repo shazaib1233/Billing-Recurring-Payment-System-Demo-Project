@@ -1,23 +1,18 @@
 <%= link_to 'Show All Bills of this User', admin_payment_path(@user.id), class: 'btn btn-primary' %>
 
-<h1> Currently Subscriped Plans: </h1>
+<h1> Currently Subscribed Plans: </h1>
 <div class='list-group'>
   <% @subscriptions.each do |subscription| %>
     <div class='list-group-item'>
       <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %><br />
       <strong>Monthly Fee: </strong><%= subscription.plan.monthly_fee %>
-      <% subscription.plan.feature_plans.each do |feature_plan| %>
+      <% subscription.features_data.each do |data| %>
         <div class='list-group-item mt-4'>
-          <%= "Feature Name: #{feature_plan.feature.name}" %><br />
-          <%= "Unit Price: #{feature_plan.feature.unit_price}" %>
-          <% subscription_feature = get_subscription_feature(subscription.subscription_features, feature_plan.feature.id) %>
+          <%= "Feature Name: #{data[:feature_plan].feature.name}" %><br />
+          <%= "Unit Price: #{data[:feature_plan].feature.unit_price}" %>
           <div class="d-flex p-2 bd-highlight">
-            <p class="text-primary">Allocated Units: </p><%= feature_plan.allocated_units %>
-            <% if subscription_feature %>
-              <p class="text-primary ms-3">Consumed Units: </p><%= subscription_feature.consumed_units %>
-            <% else %>
-              <p class="text-primary ms-3">Consumed Units: </p>0
-            <% end %>
+            <p class="text-primary">Allocated Units: </p><%= data[:feature_plan].allocated_units %>
+            <p class="text-primary ms-3">Consumed Units: </p><%= data[:subscription_feature].consumed_units %>
           </div>
         </div>
         <br />

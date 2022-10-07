@@ -2,7 +2,7 @@ class Buyer::PlansController < Buyer::BaseController
   before_action :set_plan, only: %i[ show edit update destroy ]
 
   def index
-    @plans = Plan.all
+    @plans = Plan.includes(:features)
     @subscriptions = current_user.subscriptions.includes(:subscription_features, plan: [feature_plans: [:feature]])
   end
 

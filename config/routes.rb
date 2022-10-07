@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       end
     end
     resources :subscription_features do
-      member do
+      collection do
         patch :increment_consumed
       end
     end
