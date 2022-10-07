@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #   password123#
 
-COUNT = 50
+COUNT = 10
 
 puts "Populating Database"
 
@@ -56,6 +56,12 @@ end
 subscriptions.each do |subscription|
   subscription.plan.features.each do |feature|
     subscription.subscription_features.create(feature_id: feature.id, consumed_units: (0..feature.max_unit_limit).to_a.sample)
+  end
+end
+
+users.each do |user|
+  COUNT.times.each do
+    user.payments.create(total: (1..10000).to_a.sample, status: ['pending', 'paid'].sample)
   end
 end
 
