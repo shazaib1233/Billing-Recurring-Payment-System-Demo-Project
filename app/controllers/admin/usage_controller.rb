@@ -6,8 +6,7 @@ class Admin::UsageController < Admin::BaseController
 
   def show
     @user = User.find(params[:id])
-    @subscriptions = @user.subscriptions
-    @bill = Payment.where(user_id: @user.id).last
+    @subscriptions = @user.subscriptions.includes(:subscription_features, plan: [feature_plans: [:feature]])
   end
 
 end

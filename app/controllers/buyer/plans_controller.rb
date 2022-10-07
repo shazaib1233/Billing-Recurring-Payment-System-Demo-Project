@@ -3,8 +3,7 @@ class Buyer::PlansController < Buyer::BaseController
 
   def index
     @plans = Plan.all
-    @subscriptions = Subscription.where(user_id: current_user.id)
-    @bill = Payment.where(user_id: current_user.id).last
+    @subscriptions = current_user.subscriptions.includes(:subscription_features, plan: [feature_plans: [:feature]])
   end
 
   def show; end

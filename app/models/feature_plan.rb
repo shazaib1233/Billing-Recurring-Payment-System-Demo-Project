@@ -14,5 +14,4 @@ class FeaturePlan < ApplicationRecord
 
     errors.add(:allocated_units, "should be less than #{feature.max_unit_limit}(max unit limit) for #{feature.name} feature")
   end
-
 end

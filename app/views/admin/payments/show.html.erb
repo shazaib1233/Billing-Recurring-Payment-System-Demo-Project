@@ -1,0 +1,12 @@
+<% unless @bills.blank? %>
+  <h1> All Bills for <%= @user.email %></h1>
+  <% @bills.each do |bill| %>
+    <%= "Total: $#{bill.total}" %><br />
+    <%= "Generated at: #{bill.created_at}" %><br />
+    <%= "Status: #{bill.status}" %><br />
+    <%= link_to 'Destroy bill', admin_payment_path(bill, user_id: @user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %><br />
+    <%=  "====================" %><br /><br />
+  <% end %>
+<% else %>
+  <h1> No Bill Found for <%= @user.email %></h1>
+<% end %>

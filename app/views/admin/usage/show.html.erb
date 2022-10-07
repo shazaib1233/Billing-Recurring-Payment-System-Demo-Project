@@ -1,23 +1,18 @@
-<% if @bill %>
-  <h1> Latest Available Bill for <%= @user.email %></h1>
-  <%= "Total: $#{@bill.total}" %><br />
-  <%= "Generated at: #{@bill.created_at}" %>
-<% end %>
+<%= link_to 'Show All Bills of this User', admin_payment_path(@user.id), class: 'btn btn-primary' %>
 
 <h1> Currently Subscriped Plans: </h1>
 <div class='list-group'>
   <% @subscriptions.each do |subscription| %>
     <div class='list-group-item'>
-      <% plan = subscription.plan %>
       <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %><br />
-      <strong>Monthly Fee: </strong><%= plan.monthly_fee %>
-      <% plan.features.each do |feature| %>
+      <strong>Monthly Fee: </strong><%= subscription.plan.monthly_fee %>
+      <% subscription.plan.feature_plans.each do |feature_plan| %>
         <div class='list-group-item mt-4'>
-          <%= "Feature Name: #{feature.name}" %><br />
-          <%= "Unit Price: #{feature.unit_price}" %>
-          <% subscription_feature = get_subscription_feature(subscription.id, feature.id) %>
+          <%= "Feature Name: #{feature_plan.feature.name}" %><br />
+          <%= "Unit Price: #{feature_plan.feature.unit_price}" %>
+          <% subscription_feature = get_subscription_feature(subscription.subscription_features, feature_plan.feature.id) %>
           <div class="d-flex p-2 bd-highlight">
-            <p class="text-primary">Allocated Units: </p><%= get_allocated_units(plan, feature.id) %>
+            <p class="text-primary">Allocated Units: </p><%= feature_plan.allocated_units %>
             <% if subscription_feature %>
               <p class="text-primary ms-3">Consumed Units: </p><%= subscription_feature.consumed_units %>
             <% else %>

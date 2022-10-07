@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :plans, through: :subscriptions
   has_many :payments, dependent: :destroy
+  has_many :subscription_features, through: :subscriptions
 
   has_one_attached :avatar
 

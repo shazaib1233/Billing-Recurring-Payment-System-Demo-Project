@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   namespace :buyer do
     resources :subscriptions
     resources :plans
+    resources :bills do
+      member do
+        patch :pay_bill
+      end
+    end
     resources :subscription_features do
       member do
         patch :increment_consumed

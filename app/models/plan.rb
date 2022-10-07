@@ -3,7 +3,6 @@ class Plan < ApplicationRecord
 
   has_many :feature_plans, dependent: :destroy
   has_many :features, through: :feature_plans
-
   has_many :subscriptions, dependent: :destroy
   has_many :users, through: :subscriptions
 
