@@ -1,0 +1,50 @@
+<%= link_to 'Show Pending Bills', buyer_bills_path, class: 'btn btn-primary' %>
+
+<% if @subscriptions.present? %>
+  <h1> Currently Subscribed Plans: </h1>
+  <div class='list-group'>
+    <% @subscriptions.each do |subscription| %>
+      <div class='list-group-item'>
+        <strong class='text-primary'>Subscription Name: </strong> <%= subscription.name %><br />
+        <%= link_to 'Unsubscribe', buyer_subscription_path(subscription), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger float-right' %>
+        <strong>Monthly Fee: </strong><%= subscription.plan.monthly_fee %>
+        <% subscription.plan.feature_plans.each do |feature_plan| %>
+          <div class='list-group-item mt-4'>
+            <%= "Feature Name: #{feature_plan.feature.name}" %><br />
+            <%= "Unit Price: #{feature_plan.feature.unit_price}" %>
+            <%= link_to 'Consume Unit', increment_consumed_buyer_subscription_feature_path(feature_plan.feature.id, subscription_feature: { subscription_id: subscription.id, feature_id: feature_plan.feature.id }), method: :patch, class: "list-group-item btn btn-primary float-right mx-3" %>
+            <% subscription_feature = get_subscription_feature(subscription.subscription_features, feature_plan.feature.id) %>
+            <div class="d-flex p-2 bd-highlight">
+              <p class="text-primary">Allocated Units: <%= feature_plan.allocated_units %>
+              <% if subscription_feature %>
+                <p class="text-primary ms-3">Consumed Units: </p><%= subscription_feature.consumed_units %>
+              <% else %>
+                <p class="text-primary ms-3">Consumed Units: </p>0
+              <% end %>
+            </div>
+          </div>
+          <br />
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<h1> Available Plans to Choose From : </h1>
+<div class="row">
+  <% @plans.each do |plan| %>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= plan.name %> for $<%= plan.monthly_fee %></h5>
+          <ul class="card-text">
+            <% plan.features.each do |feature| %>
+              <li><%= feature.name %></li>
+            <% end %>
+          </ul>
+          <div><%= link_to 'Explore', buyer_plan_path(plan), class: 'btn btn-primary' %></div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

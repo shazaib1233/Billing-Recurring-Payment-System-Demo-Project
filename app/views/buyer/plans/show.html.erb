@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1> Plan Details </h1>
+<ul class='list-group'>
+  <li class='list-group-item'>
+    <strong class='text-primary'>Plan name: </strong> <%= @plan.name %>
+  </li>
+  <li class='list-group-item'>
+    <strong class='text-primary'>Monthly Fee </strong> <%= @plan.monthly_fee %>
+  </li>
+  <li class='list-group-item'>
+    <strong class='text-primary'>User ID:</strong> <%= @plan.user_id %>
+  </li>
+  <li class='list-group-item'>
+    <%= render partial: "admin/plans/display_features", collection: @plan.features, as: :feature, locals: { plan_id: @plan.id } %>
+  </li>
+</ul>
+<br />
+
+<%= link_to 'Edit', edit_admin_plan_path(@plan), class: 'btn btn-primary' if current_user&.admin? %>
+<%= render 'buyer/subscriptions/popup', plan: @plan if current_user&.buyer? %>
+<%= link_to 'Back', root_path, class: 'btn btn-primary' %>

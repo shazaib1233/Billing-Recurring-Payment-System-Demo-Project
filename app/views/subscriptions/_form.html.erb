@@ -1,0 +1,22 @@
+<%= form_with(model: subscription) do |form| %>
+  <%= render 'shared/errors', object: @subscription %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :plan_id %>
+    <%= form.text_field :plan_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

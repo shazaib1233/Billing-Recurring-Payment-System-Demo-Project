@@ -1,0 +1,11 @@
+<div class='nested-fields'>
+  <div class="field">
+    <%= f.label :feature_id %>
+    <%= f.collection_select :feature_id, Feature.all, :id, :name, { include_blank: false }, multiple: false, class: "chosen" %>
+    <div class="field">
+      <%= f.label :allocated_units %>
+      <%= f.text_field :allocated_units %>
+    </div>
+    <%= link_to_remove_association "Remove feature", f %>
+  </div>
+</div>

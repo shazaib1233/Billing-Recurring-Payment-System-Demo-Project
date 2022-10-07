@@ -1,3 +1,28 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: { invitations: 'users/invitations' }
+
+  namespace :buyer do
+    resources :subscriptions
+    resources :plans
+    resources :bills do
+      member do
+        patch :pay_bill
+      end
+    end
+    resources :subscription_features do
+      member do
+        patch :increment_consumed
+      end
+    end
+  end
+
+  namespace :admin do
+    resources :users
+    resources :plans
+    resources :features
+    resources :usage
+    resources :payments
+  end
+
+  root 'home#index'
 end
