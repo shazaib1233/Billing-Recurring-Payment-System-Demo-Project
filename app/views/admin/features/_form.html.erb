@@ -1,27 +1,28 @@
 <%= form_for [:admin, @feature] do |form| %>
   <%= render 'shared/errors', object: @feature %>
+  <form>
+    <div class="field">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+    <div class="field">
+      <%= form.label :code, class: "form-label" %>
+      <%= form.text_field :code, class: "form-control" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :code %>
-    <%= form.text_field :code %>
-  </div>
+    <div class="field">
+      <%= form.label :unit_price, class: "form-label" %>
+      <%= form.number_field :unit_price, class: "form-control" %>
+    </div>
 
-  <div class="field">
-    <%= form.label :unit_price %>
-    <%= form.number_field :unit_price, step: :any %>
-  </div>
-
-  <div class="field">
-    <%= form.label :max_unit_limit %>
-    <%= form.number_field :max_unit_limit %>
-  </div>
+    <div class="field">
+      <%= form.label :max_unit_limit, class: "form-label" %>
+      <%= form.number_field :max_unit_limit, class: "form-control" %>
+    </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit 'Create Feature', class: "btn btn-primary my-3"%>
   </div>
+  </form>
 <% end %>

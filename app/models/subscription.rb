@@ -11,6 +11,7 @@ class Subscription < ApplicationRecord
     feature_plans.map do |feature_plan|
       {
         feature_plan: feature_plan,
+        # subscription_feature: subscription_features.includes(feature: [:feature_plans]).find { |sub_feature| sub_feature.feature_id == feature_plan.feature.id } || subscription_features.new(feature: feature_plan.feature)
         subscription_feature: subscription_features.find { |sub_feature| sub_feature.feature_id == feature_plan.feature.id } || subscription_features.new(feature: feature_plan.feature)
       }
     end
