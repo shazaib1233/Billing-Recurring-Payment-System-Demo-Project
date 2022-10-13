@@ -1,12 +1,9 @@
 class Admin::PaymentsController < Admin::BaseController
   def create
     id = payment_params[:user_id]
-    total = Payment.calculate_total(id)
-    if Payment.create!(payment_params.merge(total: total))
-      redirect_to admin_usage_path(id), notice: 'Bill Generated Successfully !'
-    else
-      redirect_to admin_usage_path(id), alert: 'Bill Generation Failed !'
-    end
+    Payment.generate_bills(id)
+
+    redirect_to admin_usage_path(id), notice: 'Bill Generated Successfully !'
   end
 
   def show

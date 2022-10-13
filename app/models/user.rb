@@ -17,7 +17,11 @@ class User < ApplicationRecord
 
   before_create :set_user_type
 
-  private
+  def generate_auth_token!
+    begin
+      self.auth_token = Devise.friendly_token
+    end while self.class.exists?(auth_token: auth_token)
+  end
 
   def set_user_type
     return if self.user_type.present?

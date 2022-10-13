@@ -60,9 +60,7 @@ subscriptions.each do |subscription|
 end
 
 users.each do |user|
-  COUNT.times.each do
-    user.payments.create(total: (1..10000).to_a.sample, status: ['pending', 'paid'].sample)
-  end
+  Payment.generate_bills(user.id)
 end
 
 puts "Seeding done."

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_07_092544) do
+ActiveRecord::Schema.define(version: 2022_10_11_121811) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,8 @@ ActiveRecord::Schema.define(version: 2022_10_07_092544) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "pending"
+    t.bigint "plan_id", null: false
+    t.index ["plan_id"], name: "index_payments_on_plan_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
@@ -111,6 +113,7 @@ ActiveRecord::Schema.define(version: 2022_10_07_092544) do
     t.string "invited_by_type"
     t.bigint "invited_by_id"
     t.integer "invitations_count", default: 0
+    t.string "auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
@@ -122,6 +125,7 @@ ActiveRecord::Schema.define(version: 2022_10_07_092544) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feature_plans", "features"
   add_foreign_key "feature_plans", "plans"
+  add_foreign_key "payments", "plans"
   add_foreign_key "payments", "users"
   add_foreign_key "subscription_features", "features"
   add_foreign_key "subscription_features", "subscriptions"

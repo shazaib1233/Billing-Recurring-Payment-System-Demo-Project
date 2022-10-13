@@ -1,5 +1,4 @@
 class Buyer::BillsController < Buyer::BaseController
-
   def index
     @bills = current_user.payments.pending
   end

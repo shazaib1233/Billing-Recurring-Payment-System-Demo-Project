@@ -1,0 +1,7 @@
+<% if @subscription_feature.errors.any? %>
+  $('#error-div').removeClass('d-none')
+  $('#error-div').html('<%= @subscription_feature.errors.full_messages.to_sentence %>')
+<% else %>
+  $('#consume-<%= @subscription_feature.feature_id %>-<%= @subscription_feature.subscription_id %>').html('<%= @subscription_feature.consumed_units %>')
+  $('.message-<%= @subscription_feature.feature_id %>-<%= @subscription_feature.subscription_id %>').removeClass('d-none')
+<% end %>

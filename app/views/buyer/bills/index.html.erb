@@ -1,12 +1,17 @@
 <% unless @bills.blank? %>
   <h1> All Pending Bills for <%= current_user.email %></h1>
-  <% @bills.each do |bill| %>
-    <%= "Total: $#{bill.total}" %><br />
-    <%= "Generated at: #{bill.created_at}" %><br />
-    <%= "Status: #{bill.status}" %><br />
-     <%= link_to 'Pay bill', pay_bill_buyer_bill_path(bill), method: :patch, class: "btn btn-primary" %><br />
-    <%=  "====================" %><br /><br />
-  <% end %>
+  <ol class="list-group list-group-numbered">
+    <% @bills.each do |bill| %>
+      <li class="list-group-item my-3">
+        <%= "Total: $#{bill.total}" %><br />
+        <%= "Generated at: #{bill.created_at}" %><br />
+        <%= "Plan: #{bill.created_at}" %><br />
+        <span class="badge rounded-pill bg-danger">Pending</span><br />
+        <%= link_to 'Pay bill', pay_bill_buyer_bill_path(bill), method: :patch, class: "btn btn-primary my-3" %>
+      </li>
+    <% end %>
+    <span class="badge bg-primary"><h1><%= "TOTAL : #{@bills.pluck(:total).sum}" %></h1></span>
+  </ol>
 <% else %>
   <h1> No Bill available yet</h1>
 <% end %>

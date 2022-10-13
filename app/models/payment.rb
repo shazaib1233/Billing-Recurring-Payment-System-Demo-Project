@@ -1,12 +1,13 @@
 class Payment < ApplicationRecord
   belongs_to :user
+  belongs_to :plan
 
   enum status: { pending: 'pending', paid: 'paid' }
 
-  def self.calculate_total(user)
-    total = 0
-
-    User.find(user).subscriptions.each do |subscription|
+  def self.generate_bills(id)
+    user = User.find(id)
+    user.subscriptions.each do |subscription|
+      total = 0
       total += subscription.plan.monthly_fee
       subscription.plan.feature_plans.each do |feature_plan|
         subscription_feature = subscription.subscription_features.find { |subscription_feature| subscription_feature.feature_id == feature_plan.feature.id }
@@ -21,8 +22,9 @@ class Payment < ApplicationRecord
           total += difference * feature_plan.feature.unit_price
         end
       end
+      user.payments.create!(total: total, plan_id: subscription.plan.id)
     end
 
-    total
   end
+
 end

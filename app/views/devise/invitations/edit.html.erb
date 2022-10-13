@@ -6,17 +6,17 @@
 
   <% if f.object.class.require_password_on_accepting %>
     <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password %>
+      <%= f.label :password, class: "form-label" %><br />
+      <%= f.password_field :password, class: "form-control" %>
     </div>
 
     <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation %>
+      <%= f.label :password_confirmation, class: "form-label" %><br />
+      <%= f.password_field :password_confirmation, class: "form-control" %>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit t("devise.invitations.edit.submit_button") %>
+    <%= f.submit t("devise.invitations.edit.submit_button"), class: "btn btn-primary my-3" %>
   </div>
 <% end %>

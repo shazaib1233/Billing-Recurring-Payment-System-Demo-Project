@@ -1,4 +1,9 @@
-<%= link_to 'Show Pending Bills', buyer_bills_path, class: 'btn btn-primary' %>
+<%= link_to 'Show Pending Bills', buyer_bills_path, class: 'btn btn-primary my-3' %>
+
+<div id= 'error-div' class='d-none'>
+  <div class='alert alert-danger' role='alert'>
+  </div>
+</div>
 
 <% if @subscriptions.present? %>
   <h1> Currently Subscribed Plans: </h1>
@@ -12,11 +17,20 @@
           <div class='list-group-item mt-4'>
             <%= "Feature Name: #{data[:feature_plan].feature.name}" %><br />
             <%= "Unit Price: #{data[:feature_plan].feature.unit_price}" %>
-            <%= link_to 'Consume Unit', increment_consumed_buyer_subscription_features_path(subscription_id: subscription.id, feature_id: data[:feature_plan].feature.id), method: :patch, class: "list-group-item btn btn-primary float-right mx-3" %>
+            <%= link_to 'Consume Unit', increment_consumed_buyer_subscription_features_path(subscription_id: subscription.id, feature_id: data[:feature_plan].feature.id), method: :patch, class: "list-group-item btn btn-primary float-right mx-3", remote: true %>
             <div class="d-flex p-2 bd-highlight">
               <p class="text-primary">Allocated Units: <%= data[:feature_plan].allocated_units %>
-              <p class="text-primary ms-3">Consumed Units: </p><%= data[:subscription_feature].consumed_units %>
+              <p class="text-primary ms-3">Consumed Units: </p>
+              <div id='consume-<%=data[:feature_plan].feature.id%>-<%=subscription.id%>' >
+                <%= data[:subscription_feature].consumed_units %>
+              </div>
             </div>
+            <div class='d-none message-<%=data[:feature_plan].feature.id%>-<%=subscription.id%>'>
+              <div class='alert alert-success' role='alert'>
+                Unit consumed for this feature!
+              </div>
+            </div>
+
           </div>
           <br />
         <% end %>

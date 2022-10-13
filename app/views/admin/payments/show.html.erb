@@ -1,12 +1,23 @@
 <% unless @bills.blank? %>
   <h1> All Bills for <%= @user.email %></h1>
-  <% @bills.each do |bill| %>
-    <%= "Total: $#{bill.total}" %><br />
-    <%= "Generated at: #{bill.created_at}" %><br />
-    <%= "Status: #{bill.status}" %><br />
-    <%= link_to 'Destroy bill', admin_payment_path(bill, user_id: @user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %><br />
-    <%=  "====================" %><br /><br />
-  <% end %>
+  <ol class="list-group list-group-numbered">
+    <% @bills.each do |bill| %>
+      <li class="list-group-item">
+        <br /><%= "Total: $#{bill.total}" %><br />
+        <%= "Generated at: #{bill.created_at}" %><br />
+        <%= "Plan: #{bill.plan.name}" %><br />
+        <% if bill.paid? %>
+          <span class="badge rounded-pill bg-success">Paid</span>
+        <% else %>
+          <span class="badge rounded-pill bg-warning text-dark">Pending</span>
+        <% end %>
+        <br />
+        <%= link_to 'Destroy bill', admin_payment_path(bill, user_id: @user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger my-3' %>
+      </li>
+    <% end %>
+  <span class="badge bg-primary mt-3"><h1><%= "Total : #{@bills.pluck(:total).sum}" %></h1></span>
+  <span class="badge bg-primary my-3"><h1><%= "Pending Total : #{@bills.pending.pluck(:total).sum}" %></h1></span>
+  </ol>
 <% else %>
   <h1> No Bill Found for <%= @user.email %></h1>
 <% end %>
